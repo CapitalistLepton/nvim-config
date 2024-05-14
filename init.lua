@@ -140,10 +140,6 @@ local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup({
   capabilities = capabilities,
 })
-lspconfig.volar.setup({
-  capabilities = capabilities,
-  filetypes = { "vue" },
-})
 lspconfig.tsserver.setup({
   capabilities = capabilities,
   init_options = {
