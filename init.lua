@@ -1,5 +1,9 @@
 local set = vim.opt
 
+-- Start constants
+local NODE_MODULES = "~/.nvm/versions/node/v20.13.1/lib/node_modules/"
+-- End constants
+
 -- 4 Spaces for tabs
 set.autoindent = true
 set.expandtab = true
@@ -14,6 +18,10 @@ set.foldlevel = 2
 
 -- Set , as <Leader>
 vim.g.mapleader = ','
+
+-- Set float colors to stand out
+vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"})
+vim.api.nvim_set_hl(0, "NormalFloat", {bg="#3B4252"})
 
 -- Install plugins
 local Plug = vim.fn['plug#']
@@ -132,8 +140,30 @@ local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup({
   capabilities = capabilities,
 })
+lspconfig.volar.setup({
+  capabilities = capabilities,
+  filetypes = { "vue" },
+})
 lspconfig.tsserver.setup({
   capabilities = capabilities,
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = NODE_MODULES .. "@vue/typescript-plugin",
+        languages = {"javascript", "typescript", "vue"},
+      },
+    },
+    tsserver = {
+      -- This overwrite the path from the local project, in case your project ts version is not compatible with the plugin
+      path = NODE_MODULES .. "typescript/lib",
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+  },
 })
 -- End lspconfig setup
 
