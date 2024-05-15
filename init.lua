@@ -161,6 +161,9 @@ lspconfig.tsserver.setup({
     "vue",
   },
 })
+lspconfig.rust_analyzer.setup({
+  capabilities = capabilities,
+})
 -- End lspconfig setup
 
 -- Start LSP keybindings
